@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CipherInput from "./components/CipherInput";
 import FrequencyChart from "./components/FrequencyChart";
+import FrequencyInfo from "./components/FreequencyInfo";
 import SubstitutionPanel from "./components/SubstitutionPanel";
 import PlaintextOutput from "./components/PlaintextOutput";
 import Navbar from "./components/Navbar";
@@ -11,12 +12,10 @@ export default function App() {
   const [substitutions, setSubstitutions] = useState({});
   const [plainText, setPlainText] = useState("");
 
-
   const handleResetSubstitutions = () => {
     setSubstitutions({});
     setPlainText("");
   };
-
 
   useEffect(() => {
     if (!cipherText) {
@@ -50,6 +49,7 @@ export default function App() {
             setAnalysisData={setAnalysisData}
           />
           <FrequencyChart data={analysisData} />
+         
         </div>
 
         <div className="lg:w-1/2 space-y-6">
@@ -61,6 +61,10 @@ export default function App() {
           <PlaintextOutput text={plainText} />
         </div>
       </main>
+
+      <div className=" mx-6 mb-10 mt-0">
+          <FrequencyInfo data={analysisData} />
+      </div>
     </div>
   );
 }

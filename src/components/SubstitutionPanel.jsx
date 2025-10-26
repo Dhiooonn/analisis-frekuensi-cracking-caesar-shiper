@@ -13,13 +13,25 @@ export default function SubstitutionPanel({ substitutions, setSubstitutions, onR
   return (
     <div className="bg-gray-900 p-4 rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Substitution Mapping</h2>
+        <h2 className="text-xl font-semibold">Substitution Mapping - (Pemetaan Huruf)</h2>
         <button
           onClick={onReset}
           className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm"
         >
           Reset
         </button>
+      </div>
+
+      {/* Deskripsi */}
+      <div className="mb-4 text-gray-400 text-sm">
+        <p>
+          Bagian ini digunakan untuk menentukan huruf plaintext pengganti dari setiap huruf pada ciphertext.
+          <br /> Misalnya:
+          <br />• A → E berarti setiap huruf A pada ciphertext diterjemahkan menjadi huruf E.
+          <br />• B → T berarti setiap huruf B pada ciphertext berubah menjadi T.
+          <br />
+          Mapping ini bisa diatur manual berdasarkan tebakan atau hasil analisis frekuensi huruf.
+        </p>
       </div>
 
       <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
