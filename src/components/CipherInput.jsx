@@ -1,15 +1,30 @@
 import { useState } from "react";
 import { analyzeFrequency } from "../utils/analyzeFrequency";
+import { analyzeNgrams } from "../utils/analyzeNgrams";
 
-export default function CipherInput({ cipherText, setCipherText, setAnalysisData }) {
+
+export default function CipherInput({
+  cipherText,
+  setCipherText,
+  setAnalysisData,
+  setBigramData,       // 🔹 tambahkan
+  setTrigramData,      // 🔹 tambahkan
+}) {
   const handleAnalyze = () => {
     const data = analyzeFrequency(cipherText);
     setAnalysisData(data);
+
+    const bigrams = analyzeNgrams(cipherText, 2);
+    const trigrams = analyzeNgrams(cipherText, 3);
+    setBigramData(bigrams);
+    setTrigramData(trigrams);
   };
 
   return (
     <div className="bg-gray-900 p-4 rounded-2xl shadow">
-      <h2 className="text-xl font-semibold mb-2">Cipher Text - (Input Teks Sandi)</h2>
+      <h2 className="text-xl font-semibold mb-2">
+        Cipher Text - (Input Teks Sandi)
+      </h2>
       <textarea
         value={cipherText}
         onChange={(e) => setCipherText(e.target.value)}
