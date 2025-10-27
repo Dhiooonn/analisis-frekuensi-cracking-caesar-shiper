@@ -1,4 +1,11 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 export default function FrequencyChart({ data }) {
   if (!data.length) return null;
@@ -7,15 +14,18 @@ export default function FrequencyChart({ data }) {
     <div className="bg-gray-900 p-4 rounded-2xl shadow">
       <div className="mb-5">
         <h2 className="text-xl font-semibold">Letter Frequency</h2>
-        <p className="text-gray-400">grafik batang (bar chart) huruf-huruf yang paling sering muncul di ciphertext</p>
+        <p className="text-gray-400">
+          Grafik batang (bar chart) huruf-huruf yang paling sering muncul di
+          ciphertext
+        </p>
       </div>
-      
+
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <XAxis dataKey="letter" stroke="#ccc" />
           <YAxis />
           <Tooltip
-            cursor={{ fill: "rgba(59, 130, 246, 0.2)" }} // warna hover bar
+            cursor={{ fill: "rgba(59, 130, 246, 0.2)" }}
             contentStyle={{
               backgroundColor: "#fff",
               borderRadius: "8px",
@@ -23,7 +33,14 @@ export default function FrequencyChart({ data }) {
             }}
             labelStyle={{ color: "#000" }}
             itemStyle={{ color: "#3b82f6" }}
+            formatter={(_value, _name, props) => {
+              const count = props.payload?.count ?? 0;
+              const frequency = props.payload?.frequency ?? 0;
+              return [`${frequency}% (${count}x)`, "Frekuensi"];
+            }}
+            labelFormatter={(label) => `Huruf: ${label}`}
           />
+
           <Bar dataKey="frequency" fill="#3b82f6" radius={[8, 8, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>

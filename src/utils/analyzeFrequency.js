@@ -10,9 +10,10 @@ export function analyzeFrequency(text) {
   const result = Object.entries(freq)
     .map(([letter, count]) => ({
       letter,
-      frequency: ((count / total) * 100).toFixed(2),
+      count,
+      frequency: Number(((count / total) * 100).toFixed(2)), 
     }))
-    .sort((a, b) => b.frequency - a.frequency);
+    .sort((a, b) => b.count - a.count);
 
   return result;
 }
