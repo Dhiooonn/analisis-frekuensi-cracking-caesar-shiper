@@ -1,19 +1,26 @@
 export default function FrequencyInfo({ data }) {
   if (!data || data.length === 0) return null;
 
+  // Urutkan frekuensi dari terbesar ke terkecil
   const sorted = [...data].sort((a, b) => b.frequency - a.frequency);
-  const top3 = sorted.slice(0, 3).map(item => item.letter).join(", ");
+  const topLetters = sorted.slice(0, 3).map((item) => item.letter).join(", ");
 
   return (
-    <div className="mt-6 p-4 bg-gray-800/60 border border-gray-700 rounded-xl">
-      <h3 className="text-lg font-semibold text-white mb-2">Informasi Analisis Frekuensi</h3>
-      <p className="text-gray-300 leading-relaxed text-sm">
-        Berdasarkan hasil grafik di atas, huruf yang paling sering muncul dalam ciphertext adalah
-        <span className="text-blue-400 font-medium"> {top3} </span>. 
-        Dalam analisis kriptografi (frequency analysis), huruf-huruf ini biasanya dibandingkan dengan huruf 
-        yang paling sering muncul dalam bahasa alami (contoh: E, T, A dalam bahasa Inggris atau A, N dalam Bahasa Indonesia)
-        untuk membantu menentukan kemungkinan substitusi huruf.
+    <div className="bg-gray-900 p-4 rounded-2xl shadow">
+      <h2 className="text-xl font-semibold mb-2">Informasi Analisis Frekuensi</h2>
+      <p>
+        Berdasarkan hasil grafik di atas, huruf yang paling sering muncul dalam ciphertext adalah{" "}
+        <span className="font-bold text-blue-400">{topLetters}</span>.
       </p>
+      <p className="mt-2">
+        Dalam analisis kriptografi (<i>frequency analysis</i>), huruf-huruf ini biasanya dibandingkan
+        dengan huruf yang paling sering muncul dalam bahasa alami untuk menentukan kemungkinan
+        substitusi huruf.
+      </p>
+      <ul className="mt-3 text-sm space-y-1 text-gray-300">
+        <li>• Bahasa Inggris → <span className="text-blue-400">E, T, A, O, I, N</span></li>
+        <li>• Bahasa Indonesia → <span className="text-blue-400">A, N, I, U, G, R</span></li>
+      </ul>
     </div>
   );
 }
