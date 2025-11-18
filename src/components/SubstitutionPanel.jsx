@@ -1,9 +1,39 @@
 import React from "react";
 
-const commonLetters = [ "E", "T", "A", "O", "I", "N", "S", "H", "R", "D", "L", "C", 
-  "U", "M", "W", "F", "G", "Y", "P", "B", "V", "K", "J", "X", "Q", "Z"];
+const commonLetters = [
+  "E",
+  "T",
+  "A",
+  "O",
+  "I",
+  "N",
+  "S",
+  "H",
+  "R",
+  "D",
+  "L",
+  "C",
+  "U",
+  "M",
+  "W",
+  "F",
+  "G",
+  "Y",
+  "P",
+  "B",
+  "V",
+  "K",
+  "J",
+  "X",
+  "Q",
+  "Z",
+];
 
-export default function SubstitutionPanel({ substitutions, setSubstitutions, onReset }) {
+export default function SubstitutionPanel({
+  substitutions,
+  setSubstitutions,
+  onReset,
+}) {
   const handleChange = (cipherLetter, newLetter) => {
     setSubstitutions({
       ...substitutions,
@@ -11,10 +41,18 @@ export default function SubstitutionPanel({ substitutions, setSubstitutions, onR
     });
   };
 
+  const calculateShift = (from, to) => {
+    if (!to) return null;
+    const shift = (to.charCodeAt(0) - from.charCodeAt(0) + 26) % 26;
+    return shift;
+  };
+
   return (
     <div className="bg-gray-900 p-4 rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Substitution Mapping - (Pemetaan Huruf)</h2>
+        <h2 className="text-xl font-semibold">
+          Substitution Mapping - (Pemetaan Huruf)
+        </h2>
         <button
           onClick={onReset}
           className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm"
@@ -26,33 +64,50 @@ export default function SubstitutionPanel({ substitutions, setSubstitutions, onR
       {/* Deskripsi */}
       <div className="mb-4 text-gray-400 text-sm">
         <p>
-          Bagian ini digunakan untuk menentukan huruf plaintext pengganti dari setiap huruf pada ciphertext.
+          Bagian ini digunakan untuk menentukan huruf plaintext pengganti dari
+          setiap huruf pada ciphertext.
           <br /> Misalnya:
-          <br />• A → E berarti setiap huruf A pada ciphertext diterjemahkan menjadi huruf E.
-          <br />• B → T berarti setiap huruf B pada ciphertext berubah menjadi T.
+          <br />• A → E berarti setiap huruf A pada ciphertext diterjemahkan
+          menjadi huruf E.
+          <br />• B → T berarti setiap huruf B pada ciphertext berubah menjadi
+          T.
           <br />
-          Mapping ini bisa diatur manual berdasarkan tebakan atau hasil analisis frekuensi huruf.
+          Mapping ini bisa diatur manual berdasarkan tebakan atau hasil analisis
+          frekuensi huruf.
         </p>
       </div>
 
       <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-        {Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)).map((cipherLetter) => (
-          <div key={cipherLetter} className="flex flex-col items-center text-sm">
-            <span className="text-gray-400">{cipherLetter}</span>
-            <select
-              value={substitutions[cipherLetter] || ""}
-              onChange={(e) => handleChange(cipherLetter, e.target.value)}
-              className="mt-1 p-1 bg-gray-800 border border-gray-700 rounded-md text-white"
+        {Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)).map(
+          (cipherLetter) => (
+            <div
+              key={cipherLetter}
+              className="flex flex-col items-center text-sm"
             >
-              <option value="">-</option>
-              {commonLetters.map((letter) => (
-                <option key={letter} value={letter}>
-                  {letter}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
+              <span className="text-gray-400">{cipherLetter}</span>
+              <select
+                value={substitutions[cipherLetter] || ""}
+                onChange={(e) => handleChange(cipherLetter, e.target.value)}
+                className="mt-1 p-1 bg-gray-800 border border-gray-700 rounded-md text-white"
+              >
+                <option value="">-</option>
+                {commonLetters.map((letter) => (
+                  <option key={letter} value={letter}>
+                    {letter}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-gray-500 mt-1">
+                {substitutions[cipherLetter]
+                  ? `Pergeseran: ${calculateShift(
+                      cipherLetter,
+                      substitutions[cipherLetter]
+                    )}`
+                  : "Pergeseran: -"}
+              </p>
+            </div>
+          )
+        )}
       </div>
     </div>
   );

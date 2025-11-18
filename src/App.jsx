@@ -6,15 +6,16 @@ import SubstitutionPanel from "./components/SubstitutionPanel";
 import PlaintextOutput from "./components/PlaintextOutput";
 import Navbar from "./components/Navbar";
 import EnglishFrequencyInfo from "./components/EnglishFrequencyInfo";
-import NgramAnalysis from "./components/NgramAnalysis";     
-import { analyzeNgrams } from "./utils/analyzeNgrams";      
+import NgramAnalysis from "./components/NgramAnalysis";
+import { analyzeNgrams } from "./utils/analyzeNgrams";
+import ShiftTester from "./components/ShiftTester";
 
 export default function App() {
   const [cipherText, setCipherText] = useState("");
   const [analysisData, setAnalysisData] = useState([]);
   const [substitutions, setSubstitutions] = useState({});
   const [plainText, setPlainText] = useState("");
-
+  const [ciphertext, setCiphertext] = useState("");
 
   const [bigramData, setBigramData] = useState([]);
   const [trigramData, setTrigramData] = useState([]);
@@ -23,7 +24,6 @@ export default function App() {
     setSubstitutions({});
     setPlainText("");
   };
-
 
   useEffect(() => {
     if (!cipherText) {
@@ -44,7 +44,6 @@ export default function App() {
 
     setPlainText(decrypted);
   }, [cipherText, substitutions]);
-
 
   useEffect(() => {
     if (cipherText) {
@@ -69,10 +68,26 @@ export default function App() {
           />
           <FrequencyChart data={analysisData} />
           <EnglishFrequencyInfo />
-          <NgramAnalysis bigrams={bigramData} trigrams={trigramData} /> {/* ✅ tampilkan */}
+          <NgramAnalysis bigrams={bigramData} trigrams={trigramData} />
         </div>
 
         <div className="lg:w-1/2 space-y-6">
+          <ShiftTester
+            ciphertext={cipherText}
+            onApplyShift={(shiftValue) => {
+              const applyShift = (text, shiftValue) =>
+                text.replace(/[A-Z]/gi, (char) => {
+                  const base = char === char.toUpperCase() ? 65 : 97;
+                  return String.fromCharCode(
+                    ((char.charCodeAt(0) - base + shiftValue + 26) % 26) + base
+                  );
+                });
+
+              const shifted = applyShift(cipherText, shiftValue);
+              setCipherText(shifted);
+            }}
+          />
+
           <SubstitutionPanel
             substitutions={substitutions}
             setSubstitutions={setSubstitutions}
