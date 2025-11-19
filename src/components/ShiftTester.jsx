@@ -43,25 +43,13 @@ export default function ShiftTester({ ciphertext, onApplyShift }) {
 
   return (
     <div className="bg-gray-900 p-5 rounded-xl shadow-lg mt-4">
-      <h2 className="text-2xl font-semibold mb-3">🔐 Caesar Cipher Tester</h2>
+      <h2 className="text-2xl font-semibold mb-3">Caesar Cipher Tester</h2>
 
       <p className="text-gray-400 text-sm mb-4">
         Uji apakah ciphertext menggunakan Caesar Cipher. Gunakan berbagai shift
         dan mode enkripsi untuk menganalisis pola.
       </p>
 
-      {/* MODE */}
-      <div className="mb-4">
-        <label className="text-gray-300 mr-3">Mode:</label>
-        <select
-          value={mode}
-          onChange={(e) => setMode(e.target.value)}
-          className="bg-gray-800 border border-gray-700 px-2 py-1 rounded text-white"
-        >
-          <option value="decrypt">Decrypt</option>
-          <option value="encrypt">Encrypt</option>
-        </select>
-      </div>
 
       {/* SHIFT CONTROLS */}
       <div className="flex items-center gap-3 mb-4">
